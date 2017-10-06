@@ -1,6 +1,6 @@
 # Model generator
  Model generator is a simple model generator tool that enables you to create models with types and validators.
- ## How to use
+## How to use
 ### install model-generator
 Run install command to install model-generator.
 
