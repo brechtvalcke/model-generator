@@ -79,6 +79,11 @@ Validator is a check that needs to happen when a value is set on a property. Val
 Here is a list of all validators that are available in the Validators array by default:
 * Required : Makes sure the property is required
 * Email : Makes sure the property is an email
+* Name : Alphabetic letters with accents
+* DefaultPassword : Length: 8 to 128, with at least 1 lowercase, 1 capital, 1 number and/or symbol. https://goo.gl/dufj6t
+* LettersOnly : Alphabetic letters, lowercase or capital
+* NumbersOnly : Only numbers
+* NationalRegistryNumberBE : National registry number for in belgium
 #### Register a custom validator
 Need more validators? No problem you can inject your own validator using registerValidator.
 
