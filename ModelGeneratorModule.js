@@ -38,7 +38,7 @@ class ModelGenerator {
                     checkType(value,this[prop.Name + 'Type']);
                     // validator looping
 
-                    for (var validator in this[prop.Name + "Validators"]) {
+                    for (let validator in this[prop.Name + "Validators"]) {
                         if (this[prop.Name + "Validators"].hasOwnProperty(validator)) {
                             this[prop.Name + "Validators"][validator].Validate(value);
                         }
@@ -133,13 +133,13 @@ function registerValidator(Validator){
         Validators[Validator.Name]=Validator;
     }
 }
-var Cast = (json,Model) => {
+let Cast = (json,Model) => {
     let model = new Model();
     model.Structure.properties.forEach(function(prop){
         model[prop.Name]=json[prop.Name];
     });
     return model;
-}
+};
 
 //exports
 module.exports.ModelGenerator = ModelGenerator;
