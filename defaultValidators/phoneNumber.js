@@ -1,8 +1,8 @@
 module.exports = {
-    Name : 'NumbersOnly',
+    Name : 'PhoneNumber',
     Validate : (value) => {
-        const numbersOnlyRe = /^[0-9\.\,]+$/;
-        if (!numbersOnlyRe.test(value)) {
+        const PhoneNumberRe = /^[\-\(\)\.\/\s0-9]+$/;
+        if (!PhoneNumberRe.test(value)) {
             throw Error('Property was not valid');
         }
         return true;
