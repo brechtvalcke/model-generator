@@ -35,7 +35,7 @@ class ModelGenerator {
                     },
                     "set": function(value) {
                     // type checking
-                    checkType(value,this[prop.Name + 'Type']);
+                    checkType(value,this[prop.Name + 'Type'],prop.Name);
                     // validator looping
 
                     for (let validator in this[prop.Name + "Validators"]) {
@@ -61,7 +61,7 @@ class ModelGenerator {
     }
 }
 
-function  checkType (valueToCheck,type) {
+function  checkType (valueToCheck,type,propName) {
     if (type==='any'){
         return true;
     }
@@ -69,42 +69,42 @@ function  checkType (valueToCheck,type) {
         if(typeof(valueToCheck)==='string'){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a string! String is required for this property.");
+            throw Error("Value you are trying to set is not a string! String is required for "+ propName +" property.");
         }
     }
     if (type===Number){
         if(typeof(valueToCheck)==='number'){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a number. Number is required for this property.");
+            throw Error("Value you are trying to set is not a number. Number is required for "+ propName +" property.");
         }
     }
     if (type===Boolean){
         if(typeof(valueToCheck)==='boolean'){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a boolean. Boolean is required for this property.");
+            throw Error("Value you are trying to set is not a boolean. Boolean is required for "+ propName +" property.");
         }
     }
     if (type===undefined){
         if(valueToCheck===undefined){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a undefined. Undefined is required for this property.");
+            throw Error("Value you are trying to set is not a undefined. Undefined is required for "+ propName +" property.");
         }
     }
     if (type===Symbol){
         if(typeof(valueToCheck)==='symbol'){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a symbol. Symbol is required for this property.");
+            throw Error("Value you are trying to set is not a symbol. Symbol is required for "+ propName +" property.");
         }
     }
     if (type===null){
         if(valueToCheck===null){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a null. Null is required for this property.");
+            throw Error("Value you are trying to set is not a null. Null is required for "+ propName +" property.");
         }
     }
 
@@ -112,7 +112,7 @@ function  checkType (valueToCheck,type) {
         if(valueToCheck instanceof Date){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a date. Date is required for this property.");
+            throw Error("Value you are trying to set is not a date. Date is required for "+ propName +" property.");
         }
     }
 
@@ -123,7 +123,7 @@ function  checkType (valueToCheck,type) {
         if(typeof(valueToCheck)==='object'){
             return true;
         }else{
-            throw Error("Value you are trying to set is not a object. Object is required for this property.");
+            throw Error("Value you are trying to set is not a object. Object is required for "+ propName +" property.");
         }
     }
 

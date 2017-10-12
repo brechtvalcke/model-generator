@@ -1,10 +1,10 @@
 {
   "name": "model-generator",
-
-
-
+<<<<<<< HEAD
+  "version": "0.5.8",
+=======
   "version": "0.5.9",
-
+>>>>>>> 4681891854f37061ef007be1094ea0960e97bf62
   "description": "Model generator for applications that need models with typings and validation without the help of typescript",
   "main": "ModelGeneratorModule.js",
   "scripts": {
