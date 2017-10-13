@@ -1,9 +1,9 @@
 module.exports = {
     Name : 'PhoneNumber',
-    Validate : (value) => {
+    Validate : (value,propName) => {
         const PhoneNumberRe = /^[\-\(\)\.\/\s0-9]+$/;
         if (!PhoneNumberRe.test(value)) {
-            throw Error('Property was not valid');
+            throw Error(propName+' was not valid');
         }
         return true;
     }

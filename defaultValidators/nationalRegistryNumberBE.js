@@ -1,9 +1,9 @@
 module.exports = {
     Name : 'NationalRegistryNumberBE',
-    Validate : (value) => {
+    Validate : (value,propName) => {
         const NRNRe = /([0-9]{2}\.?){3}\-?[0-9]{3}\.?[0-9]{2}/;
         if (!NRNRe.test(value)) {
-            throw Error('Property was not valid');
+            throw Error(propName+' was not valid');
         }
         return true;
     }

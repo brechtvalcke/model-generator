@@ -1,9 +1,9 @@
 module.exports = {
     Name : 'String',
-    Validate : (value) => {
+    Validate : (value,propName) => {
         const stringRe = /^(?:(?![×Þß÷þø])[-a-zA-ZÀ-ÿ.])$/;
         if (!stringRe.test(value)) {
-            throw Error('Property was not valid');
+            throw Error(propName+' was not valid');
         }
         return true;
     }

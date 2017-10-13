@@ -40,7 +40,7 @@ class ModelGenerator {
 
                     for (let validator in this[prop.Name + "Validators"]) {
                         if (this[prop.Name + "Validators"].hasOwnProperty(validator)) {
-                            this[prop.Name + "Validators"][validator].Validate(value);
+                            this[prop.Name + "Validators"][validator].Validate(value,prop.Name);
                         }
                     }
 

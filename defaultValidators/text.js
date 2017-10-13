@@ -1,9 +1,9 @@
 module.exports = {
     Name : 'Text',
-    Validate : (value) => {
+    Validate : (value,propName) => {
         const TextRe = /(?![`'"<>]).+/;
         if (!TextRe.test(value)) {
-            throw Error('Property was not valid');
+            throw Error(propName+' was not valid');
         }
         return true;
     }

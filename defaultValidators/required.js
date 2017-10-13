@@ -1,8 +1,8 @@
 module.exports = {
     Name : 'Required',
-    Validate : (value) => {
+    Validate : (value,propName) => {
         if (value === undefined || value === null) {
-            throw Error('Property is required but is not set');
+            throw Error(propName+' is required but is not set');
         }
         return true;
     }
