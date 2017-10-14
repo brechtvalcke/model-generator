@@ -142,10 +142,17 @@ let Cast = (json,Model) => {
     });
     return model;
 };
-
+var CastArray= (jsonArray,Model) => {
+    let array;
+    jsonArray.forEach(function(json){
+        array.push(Cast(json,Model));
+    },this);
+    return array;
+}
 //exports
 module.exports.ModelGenerator = ModelGenerator;
 module.exports.Property = Property;
 module.exports.registerValidator = registerValidator;
 module.exports.Validators=Validators;
 module.exports.Cast = Cast;
+module.exports.CastArray = Cast;
