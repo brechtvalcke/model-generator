@@ -136,7 +136,9 @@ function registerValidator(Validator){
 let Cast = (json,Model) => {
     let model = new Model();
     model.Structure.properties.forEach(function(prop){
-        model[prop.Name]=json[prop.Name];
+        if(json[prop.Name]!==undefined){
+            model[prop.Name]=json[prop.Name];
+        }
     });
     return model;
 };
