@@ -1,11 +1,7 @@
 {
   "name": "model-generator",
-
-
-
-  "version": "0.6.7",
-
- "description": "Model generator for applications that need models with typings and validation without the help of typescript",
+  "version": "0.7.0",
+  "description": "Model generator for applications that need models with typings and validation without the help of typescript",
   "main": "ModelGeneratorModule.js",
   "scripts": {
     "test": "node exampleModel.js"

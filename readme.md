@@ -9,14 +9,30 @@ Run install command to install model-generator.
 
 The module has differend exports. Best practice is to put these in differend variables.
 
-
 ``` javascript
-
 let ModelGeneratorModule = require('model-generator');
-let ModelGenerator = ModelGeneratorModule.ModelGenerator;
-let Property = ModelGeneratorModule.Property;
-let Validators = ModelGeneratorModule.Validators;
+let ModelGenerator = ModelGeneratorModule().ModelGenerator;
+let Property = ModelGeneratorModule().Property;
+let Validators = ModelGeneratorModule().Validators;
 ```
+
+###Optional settings
+Include an object
+``` javascript
+let settings = {
+    /**
+     * name: debug
+     * default: false
+     * requires: Boolean
+     */
+    debug: true
+};
+```
+Edit the following line if you want to add settings:
+``` javascript
+let ModelGenerator = ModelGeneratorModule(settings).ModelGenerator;
+```
+
 ### Create your model
 Create a class and extend it with the ModelGenerator class. Create a constructor and then call super(<=StructureForYourModel=>).
 ``` javascript

@@ -1,5 +1,8 @@
 let DefaultValidators =  require('./defaultValidators');
 let Validators=DefaultValidators;
+let Settings = {
+    debug: false
+};
 class Property {
     constructor(name,defaultValue,type,validators){
         if(typeof(name)==='string'){
@@ -34,20 +37,34 @@ class ModelGenerator {
                         return this['_' + prop.Name];
                     },
                     "set": function(value) {
+
+                    // convert data
                     let result = converter(value, this[prop.Name + 'Type'], prop.Name);
-                    if(result){
+                    if(result !== false){
+                        (Settings.debug)? console.log("Changing " + value + " to " + result + " for " + prop.Name): null;
                         value = result;
                     }
-                    // type checking
-                    checkType(value,this[prop.Name + 'Type'],prop.Name);
-                    // validator looping
 
+                    let isRequired = false;
                     for (let validator in this[prop.Name + "Validators"]) {
-                        if (this[prop.Name + "Validators"].hasOwnProperty(validator)) {
-                            this[prop.Name + "Validators"][validator].Validate(value,prop.Name);
+                        if(this[prop.Name + "Validators"][validator].Name == "Required"){
+                            isRequired = true;
                         }
                     }
-                    console.log(value);
+                    if(!isRequired && (value === undefined || value === null)){
+                        (Settings.debug)? console.log("Skipped " + prop.Name + " because not required and empty."): null;
+                    }else{
+                        // type checking
+                        checkType(value,this[prop.Name + 'Type'],prop.Name);
+
+                        // validator looping
+                        for (let validator in this[prop.Name + "Validators"]) {
+                            if (this[prop.Name + "Validators"].hasOwnProperty(validator)) {
+                                this[prop.Name + "Validators"][validator].Validate(value,prop.Name);
+                            }
+                        }
+                    }
+
                     this['_' + prop.Name]=value;
                      }
                 }
@@ -66,10 +83,6 @@ class ModelGenerator {
 }
 
 function converter(valueToCheck,type,propName){
-    if(type!==null && valueToCheck === null){
-        return undefined;
-    }
-
     if(type===Date && valueToCheck !== "" && valueToCheck !== null && valueToCheck !== undefined){
         if(valueToCheck instanceof Date){
             return false;
@@ -82,6 +95,7 @@ function converter(valueToCheck,type,propName){
             }
         }
     }
+    return false;
 }
 
 function checkType (valueToCheck,type,propName) {
@@ -159,23 +173,34 @@ function registerValidator(Validator){
 let Cast = (json,Model) => {
     let model = new Model();
     model.Structure.properties.forEach(function(prop){
-        if(json[prop.Name]!==undefined){
+        if(json[prop.Name]!==undefined || json[prop.Name]!==null){
             model[prop.Name]=json[prop.Name];
         }
     });
     return model;
 };
-var CastArray= (jsonArray,Model) => {
+let CastArray= (jsonArray,Model) => {
     let array;
     jsonArray.forEach(function(json){
         array.push(Cast(json,Model));
     },this);
     return array;
-}
-//exports
-module.exports.ModelGenerator = ModelGenerator;
-module.exports.Property = Property;
-module.exports.registerValidator = registerValidator;
-module.exports.Validators=Validators;
-module.exports.Cast = Cast;
-module.exports.CastArray = Cast;
+};
+
+module.exports = function(settings){
+    if(settings !== undefined){
+        if(typeof settings.debug === 'boolean'){
+            Settings.debug = settings.debug;
+        }else{
+            throw("Debug setting requires a boolean.");
+        }
+    }
+    return {
+        ModelGenerator: ModelGenerator,
+        Property: Property,
+        registerValidator: registerValidator,
+        Validators: Validators,
+        Cast: Cast,
+        CastArray: CastArray
+    };
+};
