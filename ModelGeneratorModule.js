@@ -34,6 +34,10 @@ class ModelGenerator {
                         return this['_' + prop.Name];
                     },
                     "set": function(value) {
+                    let result = converter(value, this[prop.Name + 'Type'], prop.Name);
+                    if(result){
+                        value = result;
+                    }
                     // type checking
                     checkType(value,this[prop.Name + 'Type'],prop.Name);
                     // validator looping
@@ -43,7 +47,7 @@ class ModelGenerator {
                             this[prop.Name + "Validators"][validator].Validate(value,prop.Name);
                         }
                     }
-
+                    console.log(value);
                     this['_' + prop.Name]=value;
                      }
                 }
@@ -61,7 +65,26 @@ class ModelGenerator {
     }
 }
 
-function  checkType (valueToCheck,type,propName) {
+function converter(valueToCheck,type,propName){
+    if(type!==null && valueToCheck === null){
+        return undefined;
+    }
+
+    if(type===Date && valueToCheck !== "" && valueToCheck !== null && valueToCheck !== undefined){
+        if(valueToCheck instanceof Date){
+            return false;
+        }else{
+            let date = new Date(valueToCheck);
+            if(date != "Invalid Date"){
+                return date;
+            }else{
+                throw Error("The value you are trying to set can not be to converted to a date. Date is required for "+ propName +" property.");
+            }
+        }
+    }
+}
+
+function checkType (valueToCheck,type,propName) {
     if (type==='any'){
         return true;
     }
@@ -80,7 +103,7 @@ function  checkType (valueToCheck,type,propName) {
         }
     }
     if (type===Boolean){
-        if(typeof(valueToCheck)==='boolean'){
+        if(typeof(valueToCheck)==='boolean' || valueToCheck === 0 || valueToCheck === 1 || valueToCheck == "0" || valueToCheck == "1"){
             return true;
         }else{
             throw Error("Value you are trying to set is not a boolean. Boolean is required for "+ propName +" property.");
