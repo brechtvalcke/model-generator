@@ -75,7 +75,17 @@ class ModelGenerator {
         this.getCleanModel = () =>{
             let ModelToReturn={};
             Structure.properties.forEach(function(prop) {
+                if(this[prop.Name]){
+
+                if (typeof this[prop.Name].getCleanModel === "function") { 
+                    ModelToReturn[prop.Name]=this[prop.Name].getCleanModel();  
+                }else{
+                    ModelToReturn[prop.Name]=this[prop.Name];
+                }                
+            }else{
                 ModelToReturn[prop.Name]=this[prop.Name];
+            }
+                      
             }, this);
             return ModelToReturn;
         }
