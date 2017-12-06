@@ -20,6 +20,7 @@ class Property {
         }else{
             throw Error("Validators must be an array");
         }
+        this.DefaultValue = defaultValue;
 
     }
 }
@@ -28,7 +29,7 @@ class ModelGenerator {
     {
         this.Structure=Structure;
         Structure.properties.forEach(function(prop) {
-            this['_' + prop.Name]=undefined;
+            this['_' + prop.Name]=prop.DefaultValue;
             this[prop.Name + 'Type']=prop.Type;
             this[prop.Name + "Validators"] = prop.Validators;
             Object.defineProperties(this, {
